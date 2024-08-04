@@ -42,11 +42,20 @@
         section {
             padding: 2rem;
             margin: 2rem auto;
-            max-width: 800px;
+            max-width: 1200px;
+            display: flex;
+            align-items: flex-start;
         }
 
         .project {
-            margin-bottom: 2rem;
+            flex: 1;
+            margin-right: 2rem;
+        }
+
+        .project img {
+            max-width: 100%;
+            height: auto;
+            display: block;
         }
 
         footer {
@@ -74,19 +83,27 @@
     </header>
 
     <section>
-        <h2>Projects</h2>
         <div class="project">
-            <h3>Home Security System</h3>
+            <h2>Home Security System</h2>
             <p>Using an Arduino, LCD with I2C, ultrasonic sensor, and a buzzer to create a home security system.</p>
         </div>
+        <img src="images/common_photo.jpg" alt="Common Project Photo">
+    </section>
+
+    <section>
         <div class="project">
-            <h3>Line-following Robot</h3>
+            <h2>Line-following Robot</h2>
             <p>Developing a robot that follows lines using a single IR sensor.</p>
         </div>
+        <img src="images/common_photo.jpg" alt="Common Project Photo">
+    </section>
+
+    <section>
         <div class="project">
-            <h3>Achievements</h3>
+            <h2>Achievements</h2>
             <p>Won third prize in the UDAAN TechNex Interschool tinkering competition last year and second prize this year.</p>
         </div>
+        <img src="images/common_photo.jpg" alt="Common Project Photo">
     </section>
 
     <footer>
