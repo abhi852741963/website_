@@ -11,6 +11,7 @@
             color: #00FF00;
             margin: 0;
             padding: 0;
+            overflow: hidden;
         }
 
         header {
@@ -39,10 +40,10 @@
             text-decoration: none;
         }
 
-        section {
+        .container {
             padding: 2rem;
             margin: 2rem auto;
-            max-width: 800px;
+            max-width: 1200px;
         }
 
         footer {
@@ -53,6 +54,38 @@
             position: fixed;
             bottom: 0;
             width: 100%;
+        }
+
+        .cursor {
+            display: inline-block;
+            background-color: #00FF00;
+            width: 10px;
+            height: 20px;
+            animation: blink 1s steps(2, start) infinite;
+            vertical-align: bottom;
+        }
+
+        @keyframes blink {
+            to {
+                visibility: hidden;
+            }
+        }
+
+        @keyframes textFall {
+            from {
+                top: -100%;
+            }
+            to {
+                top: 0;
+            }
+        }
+
+        .falling-text {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: textFall 2s ease-out;
         }
     </style>
 </head>
@@ -69,13 +102,16 @@
         </nav>
     </header>
 
-    <section>
+    <div class="container">
         <h2>About Me</h2>
-        <p>Passionate coder and tinkerer. Currently working on various projects involving Arduino and robotics.</p>
-    </section>
+        <p>I'm Abhinav Ram MS, a passionate coder and tinkerer. I love creating innovative projects and exploring new technologies.</p>
+        <div class="falling-text" id="fallingText">Loading...</div>
+    </div>
 
     <footer>
         <p>&copy; 2024 Abhinav Ram MS. All rights reserved.</p>
     </footer>
-</body>
-</html>
+
+    <script>
+        window.onload = function() {
+            document.getElementById('
