@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Abhinav Ram MS</title>
+    <title>Projects - Abhinav Ram MS</title>
     <style>
         body {
             font-family: "Courier New", Courier, monospace;
@@ -11,6 +11,7 @@
             color: #00FF00;
             margin: 0;
             padding: 0;
+            overflow: hidden;
         }
 
         header {
@@ -39,10 +40,32 @@
             text-decoration: none;
         }
 
-        section {
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             padding: 2rem;
             margin: 2rem auto;
-            max-width: 800px;
+            max-width: 1200px;
+        }
+
+        .projects-list {
+            flex: 1;
+            margin-right: 2rem;
+        }
+
+        .projects-list h2 {
+            margin-top: 0;
+        }
+
+        .project-item {
+            margin-bottom: 2rem;
+        }
+
+        .project-photo {
+            flex-shrink: 0;
+            max-width: 400px;
+            height: auto;
         }
 
         footer {
@@ -53,6 +76,38 @@
             position: fixed;
             bottom: 0;
             width: 100%;
+        }
+
+        .cursor {
+            display: inline-block;
+            background-color: #00FF00;
+            width: 10px;
+            height: 20px;
+            animation: blink 1s steps(2, start) infinite;
+            vertical-align: bottom;
+        }
+
+        @keyframes blink {
+            to {
+                visibility: hidden;
+            }
+        }
+
+        @keyframes textFall {
+            from {
+                top: -100%;
+            }
+            to {
+                top: 0;
+            }
+        }
+
+        .falling-text {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: textFall 2s ease-out;
         }
     </style>
 </head>
@@ -69,15 +124,33 @@
         </nav>
     </header>
 
-    <section>
-        <h2>Contact</h2>
-        <p>Feel free to reach out to me on <a href="https://www.instagram.com/__.abhinav.ram.ms._/" target="_blank">Instagram</a>.</p>
-        <p>Email: <a href="mailto:abhinavramms5@gmail.com">abhinavramms5@gmail.com</a></p>
-        <p>GitHub: <a href="https://github.com/abhi852741963" target="_blank">https://github.com/abhi852741963</a></p>
-    </section>
+    <div class="container">
+        <div class="projects-list">
+            <div class="project-item">
+                <h2>Home Security System</h2>
+                <p>Using an Arduino, LCD with I2C, ultrasonic sensor, and a buzzer to create a home security system.</p>
+            </div>
+            <div class="project-item">
+                <h2>Line-following Robot</h2>
+                <p>Developing a robot that follows lines using a single IR sensor.</p>
+            </div>
+            <div class="project-item">
+                <h2>Achievements</h2>
+                <p>Won third prize in the UDAAN TechNex Interschool tinkering competition last year and second prize this year.</p>
+            </div>
+        </div>
+        <img class="project-photo" src="images/common_photo.jpg" alt="Common Project Photo">
+        <div class="falling-text" id="fallingText">Loading...</div>
+    </div>
 
     <footer>
         <p>&copy; 2024 Abhinav Ram MS. All rights reserved.</p>
     </footer>
+
+    <script>
+        window.onload = function() {
+            document.getElementById('fallingText').innerText = 'Projects';
+        }
+    </script>
 </body>
 </html>
