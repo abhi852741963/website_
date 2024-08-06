@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Abhinav Ram MS</title>
+    <title>About - Abhinav Ram MS</title>
     <style>
         body {
             font-family: "Courier New", Courier, monospace;
@@ -67,6 +67,7 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
+            display: none;
         }
 
         .cursor {
@@ -99,8 +100,8 @@
     </header>
 
     <div class="container">
-        <h2>Welcome to My Portfolio</h2>
-        <p>Hi, I'm Abhinav Ram MS, a passionate coder and tinkerer. Explore my projects and get to know more about me.</p>
+        <h2>About Me</h2>
+        <p>I am Abhinav Ram MS, a passionate coder and tinkerer. I love working on various projects that involve electronics, coding, and creativity.</p>
     </div>
 
     <footer>
@@ -110,9 +111,11 @@
     <canvas class="rain"></canvas>
 
     <script>
-        window.onload = function() {
+        function showRain(event) {
+            event.preventDefault();
             const canvas = document.querySelector('.rain');
             const ctx = canvas.getContext('2d');
+            canvas.style.display = 'block';
 
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -142,7 +145,15 @@
             }
 
             setInterval(draw, 33);
+
+            setTimeout(() => {
+                window.location.href = event.target.href;
+            }, 3000);
         }
+
+        document.querySelectorAll('nav ul li a').forEach(link => {
+            link.addEventListener('click', showRain);
+        });
     </script>
 </body>
 </html>
