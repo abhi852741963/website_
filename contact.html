@@ -44,6 +44,8 @@
             padding: 2rem;
             margin: 2rem auto;
             max-width: 1200px;
+            z-index: 1;
+            position: relative;
         }
 
         footer {
@@ -54,6 +56,17 @@
             position: fixed;
             bottom: 0;
             width: 100%;
+            z-index: 1;
+        }
+
+        .rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .cursor {
@@ -69,23 +82,6 @@
             to {
                 visibility: hidden;
             }
-        }
-
-        @keyframes textFall {
-            from {
-                top: -100%;
-            }
-            to {
-                top: 0;
-            }
-        }
-
-        .falling-text {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: textFall 2s ease-out;
         }
     </style>
 </head>
@@ -106,16 +102,47 @@
         <h2>Contact Me</h2>
         <p>Email: <a href="mailto:abhinavramms5@gmail.com" style="color: #00FF00;">abhinavramms5@gmail.com</a></p>
         <p>GitHub: <a href="https://github.com/abhi852741963" style="color: #00FF00;">github.com/abhi852741963</a></p>
-        <div class="falling-text" id="fallingText">Loading...</div>
     </div>
 
     <footer>
         <p>&copy; 2024 Abhinav Ram MS. All rights reserved.</p>
     </footer>
 
+    <canvas class="rain"></canvas>
+
     <script>
         window.onload = function() {
-            document.getElementById('fallingText').innerText = 'Contact Me';
+            const canvas = document.querySelector('.rain');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+
+            const drops = Array.from({ length: columns }, () => 1);
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#0F0';
+                ctx.font = `${fontSize}px monospace`;
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = letters[Math.floor(Math.random() * letters.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+
+            setInterval(draw, 33);
         }
     </script>
 </body>
