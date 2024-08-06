@@ -67,6 +67,7 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
+            display: none;
         }
 
         .cursor {
@@ -111,9 +112,10 @@
     <canvas class="rain"></canvas>
 
     <script>
-        window.onload = function() {
+        function showRain() {
             const canvas = document.querySelector('.rain');
             const ctx = canvas.getContext('2d');
+            canvas.style.display = 'block';
 
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -143,7 +145,18 @@
             }
 
             setInterval(draw, 33);
+
+            setTimeout(() => {
+                window.location.href = event.target.href;
+            }, 3000);
         }
+
+        document.querySelectorAll('nav ul li a').forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                showRain();
+            });
+        });
     </script>
 </body>
 </html>
