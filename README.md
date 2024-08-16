@@ -36,4 +36,4 @@ The design follows a CMD green vibe theme to give it a unique look and feel, res
 To run the website locally:
 1. Clone the repository from GitHub:
    ```bash
-   git clone https://github.com/abhi852741963/your-repo-name.git
+   git clone https://github.com/abhi852741963/website_.git
