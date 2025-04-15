@@ -11,7 +11,7 @@
             color: #00FF00;
             margin: 0;
             padding: 0;
-            overflow: hidden;
+            overflow: hidden; /* Keep hidden to prevent scrollbars during transition */
         }
 
         header {
@@ -19,6 +19,8 @@
             color: #00FF00;
             padding: 1rem;
             text-align: center;
+            position: relative; /* Needed for z-index */
+            z-index: 2;
         }
 
         header h1 {
@@ -38,14 +40,20 @@
         nav ul li a {
             color: #00FF00;
             text-decoration: none;
+            transition: color 0.3s ease; /* Smooth hover effect */
+        }
+        nav ul li a:hover {
+            color: #ffffff; /* White hover for links */
         }
 
         .container {
             padding: 2rem;
             margin: 2rem auto;
             max-width: 1200px;
+            position: relative; /* Needed for z-index */
             z-index: 1;
-            position: relative;
+            opacity: 0; /* Start faded out */
+            transition: opacity 0.7s ease-in-out; /* Fade transition */
         }
 
         footer {
@@ -56,7 +64,7 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            z-index: 1;
+            z-index: 2; /* Above content, below rain potentially */
         }
 
         .rain {
@@ -65,18 +73,21 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
+            z-index: 5; /* Highest layer during transition */
             pointer-events: none;
-            display: none;
+            display: none; /* Initially hidden */
+            opacity: 0; /* Start transparent */
+            transition: opacity 0.5s ease-in-out; /* Fade for rain canvas */
         }
 
         .cursor {
             display: inline-block;
             background-color: #00FF00;
             width: 10px;
-            height: 20px;
+            height: 1.2em; /* Relative to font size */
             animation: blink 1s steps(2, start) infinite;
-            vertical-align: bottom;
+            vertical-align: text-bottom; /* Better alignment */
+            margin-left: 2px;
         }
 
         @keyframes blink {
@@ -88,7 +99,7 @@
 </head>
 <body>
     <header>
-        <h1>Abhinav Ram MS</h1>
+        <h1>Abhinav Ram MS<span class="cursor"></span></h1>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
@@ -101,58 +112,103 @@
 
     <div class="container">
         <h2>Welcome to My Portfolio</h2>
-        <p>Hi, I'm Abhinav Ram MS, a passionate coder and tinkerer. Explore my projects and get to know more about me.</p>
+        <p>Hi, I'm Abhinav Ram MS, a passionate coder and tinkerer. Explore my projects and get to know more about me.<span class="cursor"></span></p>
     </div>
 
     <footer>
-        <p>&copy; 2024 Abhinav Ram MS. All rights reserved.</p>
+        <p>© 2024 Abhinav Ram MS. All rights reserved.</p>
     </footer>
 
     <canvas class="rain"></canvas>
 
     <script>
+        const container = document.querySelector('.container');
+        const canvas = document.querySelector('.rain');
+        const ctx = canvas.getContext('2d');
+        let animationInterval; // To store the interval ID
+
+        // Fade in content on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => { // Small delay for smoother effect
+                container.style.opacity = '1';
+            }, 100);
+        });
+
         function showRain(event) {
-            event.preventDefault();
-            const canvas = document.querySelector('.rain');
-            const ctx = canvas.getContext('2d');
-            canvas.style.display = 'block';
+            event.preventDefault(); // Prevent immediate navigation
+            const targetUrl = event.target.href;
 
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            // 1. Fade out current content
+            container.style.opacity = '0';
 
-            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            const fontSize = 16;
-            const columns = canvas.width / fontSize;
-
-            const drops = Array.from({ length: columns }, () => 1);
-
-            function draw() {
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                ctx.fillStyle = '#0F0';
-                ctx.font = `${fontSize}px monospace`;
-
-                for (let i = 0; i < drops.length; i++) {
-                    const text = letters[Math.floor(Math.random() * letters.length)];
-                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
-                    }
-                    drops[i]++;
-                }
-            }
-
-            setInterval(draw, 33);
-
+            // 2. After content fade-out, start rain effect
             setTimeout(() => {
-                window.location.href = event.target.href;
-            }, 3000);
+                canvas.style.display = 'block';
+                requestAnimationFrame(() => { // Ensure display:block is applied before opacity change
+                    canvas.style.opacity = '1';
+                });
+
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ0123456789<>?:";|{}!@#$%^&*()_+=-`~'; // More matrix-like chars
+                const fontSize = 16;
+                const columns = canvas.width / fontSize;
+                const drops = Array.from({ length: Math.ceil(columns) }).fill(1);
+
+                function draw() {
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.04)'; // Slower fade for trails
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    ctx.fillStyle = '#0F0'; // Green text
+                    ctx.font = `${fontSize}px monospace`;
+
+                    for (let i = 0; i < drops.length; i++) {
+                        const text = letters[Math.floor(Math.random() * letters.length)];
+                        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                        // Reset drop randomly or if it goes off screen
+                        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                            drops[i] = 0;
+                        }
+                        drops[i]++;
+                    }
+                }
+
+                // Clear any existing interval before starting a new one
+                if (animationInterval) {
+                    clearInterval(animationInterval);
+                }
+                animationInterval = setInterval(draw, 33); // ~30 FPS
+
+                // 3. Wait for rain effect, then fade out rain and navigate
+                setTimeout(() => {
+                    canvas.style.opacity = '0'; // Fade out rain
+                    clearInterval(animationInterval); // Stop drawing
+                    animationInterval = null;
+
+                    // 4. Navigate after rain fade-out
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 500); // Match rain fade-out duration
+
+                }, 2000); // Duration rain effect is visible (e.g., 2 seconds)
+
+            }, 700); // Wait for content fade-out (matches CSS transition)
         }
 
         document.querySelectorAll('nav ul li a').forEach(link => {
             link.addEventListener('click', showRain);
+        });
+
+        // Optional: Handle window resize for rain effect if it stays visible
+        window.addEventListener('resize', () => {
+            if (canvas.style.display === 'block') {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                // Could potentially recalculate columns/drops here if needed,
+                // but for a short transition it might not be necessary.
+            }
         });
     </script>
 </body>
