@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Abhinav Ram MS</title>
+    <title>Contact - Abhinav Ram MS</title>
     <style>
         /* --- PASTE EXACT SAME CSS from index.html here --- */
         body {
@@ -56,31 +56,15 @@
             opacity: 0; /* Start faded out */
             transition: opacity 0.7s ease-in-out; /* Fade transition */
         }
-
-        /* --- Style for project items --- */
-        .project-item {
-            margin-bottom: 2rem; /* Space between projects */
-            border-left: 3px solid #00FF00; /* Accent line */
-            padding-left: 1rem;
-        }
-        .project-item h3 {
-            margin-top: 0;
-            margin-bottom: 0.5rem;
-            color: #ffffff; /* White heading for contrast */
-        }
-        .project-item p {
-            margin-bottom: 0.5rem;
-        }
-        .project-item .keywords {
-            font-size: 0.9em;
-            color: #00cc00; /* Slightly dimmer green for keywords */
-        }
-        .project-item .ai-note {
-             font-size: 0.85em;
-             font-style: italic;
-             color: #aaaaaa; /* Grey italic note */
-        }
-        /* --- End Style for project items --- */
+        /* Make contact links more prominent */
+         .container a {
+             color: #33FF33; /* Brighter green for links */
+             text-decoration: underline;
+             transition: color 0.3s ease;
+         }
+         .container a:hover {
+             color: #ffffff;
+         }
 
 
         footer {
@@ -122,7 +106,6 @@
                 visibility: hidden;
             }
         }
-        /* --- Remove .projects-photo style if it existed --- */
         /* --- END OF PASTED CSS --- */
     </style>
 </head>
@@ -140,40 +123,12 @@
     </header>
 
     <div class="container">
-        <h2>Projects<span class="cursor"></span></h2>
-        <p>Here are some of the projects I've been working on:</p>
-
-        <div class="project-item">
-            <h3>AIPTCS: AI Powered Traffic Control System</h3>
-            <p>This system utilizes computer vision to optimize traffic flow. It employs a YOLOv12 model for real-time vehicle detection and counting. Based on the detected traffic density across different lanes, it dynamically allocates green light timings to minimize congestion and waiting times. Data processing and analysis potentially leverage libraries like <strong>Pandas</strong> and <strong>NumPy</strong> for handling detection results.</p>
-
-        </div>
-
-        <div class="project-item">
-            <h3>ESPark: ESP-based Wireless Control UI</h3>
-            <p>ESPark involves using an ESP microcontroller (like ESP32 or ESP8266) configured as a Wi-Fi Access Point (AP). When a user connects to this AP via their phone or computer, they are presented with a web-based user interface served directly from the ESP. This UI, built with <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong>, allows for monitoring sensor data or controlling connected peripherals (e.g., LEDs, relays) wirelessly without needing an existing internet connection.</p>
-           
-        </div>
-
-        <div class="project-item">
-            <h3>ESP32-CAM Search and Rescue Rover</h3>
-            <p>A remotely operated rover designed for basic search and reconnaissance tasks. It's built around an <strong>ESP32-CAM</strong> module, which provides both microcontroller capabilities and a camera. The rover streams live video back to an operator and can be controlled wirelessly, potentially using a web interface or a dedicated application, enabling exploration of hard-to-reach areas.</p>
-      
-        </div>
-
-        <div class="project-item">
-            <h3>LLM Chatbot Interface</h3>
-            <p>Developed a web-based user interface (UI) to interact with various Large Language Models (LLMs) via their respective APIs. This project focuses on creating an intuitive front-end experience using <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong> to send prompts to different AI models and display their responses cleanly, allowing for easy comparison or usage of different chatbot services.</p>
-          
-            <p class="ai-note">Note: AI assistance was utilized during the development of the UI components for this project.</p>
-        </div>
-
-         <div class="project-item">
-            <h3>UDAAN TechNex Tinkering Competitions</h3>
-            <p>Participated in the UDAAN TechNex Interschool tinkering competition, achieving <strong>Third prize</strong> last year and securing <strong>Second prize</strong> this year. These competitions involved conceptualizing, designing, and building innovative projects combining electronics and coding principles.</p>
-          
-        </div>
-
+        <h2>Contact Me</h2>
+        <p>Feel free to reach out via email or check out my code on GitHub:<span class="cursor"></span></p>
+        <p>Email: <a href="mailto:abhinavramms5@gmail.com">abhinavramms5@gmail.com</a></p>
+        <p>GitHub: <a href="https://github.com/abhi852741963" target="_blank" rel="noopener noreferrer">github.com/abhi852741963</a></p>
+        <!-- Add LinkedIn or other links if you have them -->
+        <!-- <p>LinkedIn: <a href="[Your LinkedIn URL]" target="_blank" rel="noopener noreferrer">Your Name on LinkedIn</a></p> -->
     </div>
 
     <footer>
@@ -184,7 +139,7 @@
 
     <script>
         /* --- PASTE EXACT SAME JAVASCRIPT from index.html here --- */
-         const container = document.querySelector('.container');
+        const container = document.querySelector('.container');
         const canvas = document.querySelector('.rain');
         const ctx = canvas.getContext('2d');
         let animationInterval; // To store the interval ID
@@ -196,7 +151,7 @@
             }, 100);
         });
 
-        function showRain(event) {
+        function showRain(event) { // Make sure event is passed
             event.preventDefault(); // Prevent immediate navigation
             const targetUrl = event.target.href;
 
@@ -259,8 +214,9 @@
             }, 700); // Wait for content fade-out (matches CSS transition)
         }
 
+        // Ensure the event listener passes the event object
         document.querySelectorAll('nav ul li a').forEach(link => {
-            link.addEventListener('click', showRain);
+            link.addEventListener('click', showRain); // Pass event implicitly
         });
 
          // Optional: Handle window resize for rain effect if it stays visible
